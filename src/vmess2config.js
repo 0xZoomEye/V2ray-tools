@@ -1,5 +1,5 @@
 #!/usr/bin/env node
-const request = require('./utils/request')
+const request = require("./utils/request");
 const { default: produce } = require("immer");
 
 // generate port from 10800 to 65535
@@ -67,7 +67,7 @@ function setOutbound(config, data) {
   if (data.protocol === "vmess") {
     vmess(config, data);
   }
-  streamSettings(config.streamSettings, data);
+  // streamSettings(config.streamSettings, data);
 }
 
 function parseVMess(url) {
@@ -105,10 +105,14 @@ async function vmesses2PoolConfig({ base, url }) {
     const {
       inbounds: [inbound],
       outbounds: [outbound],
+      routing: {
+        rules: [rule],
+      },
     } = config;
 
     const inbounds = [],
-      outbounds = [];
+      outbounds = [],
+      rules = [];
     urls.forEach((url) => {
       const data = parseVMess(url);
       const tag = getTag(data);
@@ -124,10 +128,17 @@ async function vmesses2PoolConfig({ base, url }) {
           setOutbound(item, data);
         })
       );
+      rules.push(
+        produce(rule, (item) => {
+          item.inboundTag = tag;
+          item.outboundTag = tag;
+        })
+      );
     });
 
     config.inbounds = inbounds;
     config.outbounds = outbounds;
+    config.routing.rules = rules;
   });
 }
 
