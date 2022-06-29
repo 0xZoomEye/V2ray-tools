@@ -1,0 +1,25 @@
+{
+  "name": "v2ray-tools",
+  "version": "1.0.0",
+  "description": "v2ray tools, convert vmess url into v2ray config / proxy pool config",
+  "main": "index.js",
+  "bin": {
+    "v2ray-tools": "./src/cli.js"
+  },
+  "scripts": {},
+  "keywords": [
+    "v2ray",
+    "vmess",
+    "tools",
+    "utils",
+    "config",
+    "proxy",
+    "pool"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "immer": "^9.0.15",
+    "yargs": "^17.5.1"
+  }
+}
