@@ -41,3 +41,80 @@ Options:
   --url         vmess url                                     [array] [required]
   --v2ray-path                                                [default: "v2ray"]
 ```
+
+ProxyPool <sub>-- route by tag</sub>
+----
+
+one to one
+
+```
+{
+	inbounds: [
+		{
+			tag: xxx
+		}
+	],
+	inbounds: [
+		{
+			tag: yyy
+		}
+	],
+	routing: {
+		rules: [
+			{
+				inbound: xxx
+				outbound: yyy
+			}
+		]
+	}
+}
+```
+
+one to many
+
+```
+{
+	...
+	routing: {
+		rules: [
+			{
+				inbound: xxx
+				outbound: [yyy]
+			}
+		]
+	}
+}
+```
+
+many to one
+
+```
+{
+	...
+	routing: {
+		rules: [
+			{
+				inbound: [xxx]
+				outbound: yyy
+			}
+		]
+	}
+}
+```
+
+many to many
+
+```
+{
+	...
+	routing: {
+		rules: [
+			{
+				inbound: [xxx]
+				outbound: [yyy]
+			}
+		]
+	}
+}
+```
+
