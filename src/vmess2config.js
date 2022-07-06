@@ -14,7 +14,7 @@ function getTag(data) {
 async function getSubscribe(url) {
   const res = await request(url);
   const buffer = Buffer.from(res, "base64");
-  const vmesses = buffer.toString().trim().split("\r\n");
+  const vmesses = buffer.toString().trim().split(/\r\n|\n/);
   return vmesses;
 }
 
@@ -115,6 +115,7 @@ async function vmesses2PoolConfig({ base, url }) {
       rules = [];
     urls.forEach((url) => {
       const data = parseVMess(url);
+      if(!data) return;
       const tag = getTag(data);
       const port = getRandomPort();
       inbounds.push(
